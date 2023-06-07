@@ -11,9 +11,13 @@ def get_data(file_path='combined_data.xlsx', direction=0, spec_scale=10**12, noi
 
     if noise_scale > 0:
         if direction:
-            temp = np.random.normal(loc=0, scale=noise_scale, size=temp.size).reshape(temp.shape)
+            mean = temp.mean()
+            noise = np.random.normal(0, mean*noise_scale, temp.shape)
+            temp = temp + noise
         else:
-            spec = np.random.normal(loc=0, scale=noise_scale, size=spec.size).reshape(spec.shape)
+            mean = spec.mean()
+            noise = np.random.normal(0, mean*noise_scale, spec.shape)
+            spec = spec + noise
 
     if direction:
         X = torch.tensor(temp, dtype=torch.float32)
