@@ -6,31 +6,32 @@ from sklearn.preprocessing import StandardScaler
 
 class ThermDataset(Dataset):
 
-    def __init__(self, fp, direction, noise_scale):
+    def __init__(self, fp, direction, noise_scale, spec_scale=10**12):
         self.df = pd.read_excel(fp)
-        self.temp = self.df.iloc[:,:11].values
-        self.spec = self.df.iloc[:,11:].values
+        temp = self.df.iloc[:,:11].values
+        spec = self.df.iloc[:,11:].values
 
         if noise_scale:
             if direction:
-                mean = self.temp.mean()
-                noise = np.random.normal(0, mean*noise_scale, self.temp.shape)
-                self.temp = self.temp + noise
+                mean = temp.mean()
+                noise = np.random.normal(0, mean*noise_scale, temp.shape)
+                self.temp = temp + noise
             else:
-                mean = self.spec.mean()
-                noise = np.random.normal(0, mean*noise_scale, self.spec.shape)
-                self.spec = self.spec + noise
+                mean = spec.mean()
+                noise = np.random.normal(0, mean*noise_scale, spec.shape)
+                spec = spec + noise
 
         scaler = StandardScaler()
         
         if direction:
-            self.temp = scaler.fit_transform(self.temp)
-            self.x = torch.tensor(self.temp, dtype=torch.float32)
-            self.y = torch.tensor(self.spec, dtype=torch.float32)
+            spec = spec * spec_scale
+            temp = scaler.fit_transform(self.temp)
+            self.x = torch.tensor(temp, dtype=torch.float32)
+            self.y = torch.tensor(spec, dtype=torch.float32)
         else:
-            self.spec = scaler.fit_transform(self.spec)
-            self.x = torch.tensor(self.spec, dtype=torch.float32)
-            self.y = torch.tensor(self.temp, dtype=torch.float32)
+            spec = scaler.fit_transform(spec)
+            self.x = torch.tensor(spec, dtype=torch.float32)
+            self.y = torch.tensor(temp, dtype=torch.float32)
 
         self.n_samples = self.df.shape[0]
 
