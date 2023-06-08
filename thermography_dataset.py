@@ -23,8 +23,8 @@ class ThermDataset(Dataset):
 
         if tandem:
             spec = spec * spec_scale
-            self.x = torch.tensor(spec, dtype=torch.float32)
-            self.y = torch.tensor(temp, dtype=torch.float32)
+            self.x = torch.tensor(temp, dtype=torch.float32)
+            self.y = torch.tensor(spec, dtype=torch.float32)
         else:
             scaler = StandardScaler()
             
