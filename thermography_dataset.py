@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 
 class ThermDataset(Dataset):
 
-    def __init__(self, fp, noise_scale, tandem=0, direction=0, spec_scale=10**12):
+    def __init__(self, fp, noise_scale, tandem=1, direction=0, spec_scale=10**12):
         self.df = pd.read_excel(fp)
         temp = self.df.iloc[:,:11].values
         spec = self.df.iloc[:,11:].values
