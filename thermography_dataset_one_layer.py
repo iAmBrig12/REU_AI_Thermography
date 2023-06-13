@@ -9,7 +9,7 @@ class ThermDataset(Dataset):
     def __init__(self, fp, noise_scale, tandem=1, direction=0, spec_scale=10**12):
         self.df = pd.read_excel(fp)
         self.wavelengths = self.df.columns[11:]
-        temp = self.df.iloc[:,:11].values
+        temp = self.df.iloc[:,10].values
         spec = self.df.iloc[:,11:].values
 
         if noise_scale:
