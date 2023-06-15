@@ -6,15 +6,11 @@ from sklearn.preprocessing import StandardScaler
 
 class ThermDataset(Dataset):
 
-    def __init__(self, fp, noise_scale, layer, spec_scale=10**12):
+    def __init__(self, fp, noise_scale, spec_scale=10**12):
         self.df = pd.read_excel(fp)
         self.wavelengths = self.df.columns[11:]
         
-        if layer:
-            temp = self.df.iloc[:,layer-1].values
-        else:
-            temp = self.df.iloc[:,:11].values
-
+        temp = self.df.iloc[:,:11].values
         spec = self.df.iloc[:,11:].values
 
         
@@ -24,11 +20,7 @@ class ThermDataset(Dataset):
 
         spec = spec * spec_scale
         
-        if layer:
-            self.temp = torch.tensor(temp, dtype=torch.float32).reshape(-1, 1)
-        else:
-            self.temp = torch.tensor(temp, dtype=torch.float32)
-            
+        self.temp = torch.tensor(temp, dtype=torch.float32) 
         self.spec = torch.tensor(spec, dtype=torch.float32)
         
 
