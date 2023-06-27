@@ -1,0 +1,93 @@
+------------------------
+| 06/27/2023, 11:47:18 |
+------------------------
+
+Losses:
+--------
+layer 1 loss: 8.447721481323242
+layer 2 loss: 9.710322380065918
+layer 3 loss: 6.373484134674072
+layer 4 loss: 6.334183216094971
+layer 5 loss: 6.059988975524902
+layer 6 loss: 6.455925941467285
+layer 7 loss: 5.954197883605957
+layer 8 loss: 4.392080307006836
+layer 9 loss: 4.409793853759766
+layer 10 loss: 3.814058542251587
+layer 11 loss: 0.644627034664154
+
+Args:
+-------
+lr: 0.01
+train epochs: 750
+hidden layers: 10
+noise: 0.01
+train size: 0.7
+spec scale: 1000000000000
+train criterion: L1Loss()
+test criterion: L1Loss()
+correlation: 0
+
+
+------------------------
+| 06/27/2023, 11:53:12 |
+------------------------
+
+Losses:
+--------
+layer 1 loss: 8.547788619995117
+layer 2 loss: 10.207282066345215
+layer 3 loss: 6.569919109344482
+layer 4 loss: 6.589212894439697
+layer 5 loss: 6.470772743225098
+layer 6 loss: 6.428772926330566
+layer 7 loss: 6.287439346313477
+layer 8 loss: 4.727956295013428
+layer 9 loss: 4.3242645263671875
+layer 10 loss: 3.7216875553131104
+layer 11 loss: 0.6181246042251587
+
+Args:
+-------
+lr: 0.001
+train epochs: 1000
+hidden layers: 20
+noise: 0.01
+train size: 0.7
+spec scale: 1000000000000
+train criterion: L1Loss()
+test criterion: L1Loss()
+correlation: 0
+
+
+------------------------
+| 06/27/2023, 11:58:06 |
+------------------------
+
+Losses:
+--------
+layer 1 loss: 10.040572166442871
+layer 2 loss: 10.436718940734863
+layer 3 loss: 6.88621187210083
+layer 4 loss: 7.291681289672852
+layer 5 loss: 6.214608669281006
+layer 6 loss: 6.668022155761719
+layer 7 loss: 6.395709991455078
+layer 8 loss: 6.305983066558838
+layer 9 loss: 4.457427024841309
+layer 10 loss: 3.512463331222534
+layer 11 loss: 0.49085426330566406
+
+Args:
+-------
+lr: 0.01
+train epochs: 500
+hidden layers: 5
+noise: 0.01
+train size: 0.7
+spec scale: 1000000000000
+train criterion: L1Loss()
+test criterion: L1Loss()
+correlation: 0.2
+
+
