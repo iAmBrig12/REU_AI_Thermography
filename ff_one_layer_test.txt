@@ -58,3 +58,33 @@
 | correlation: 0.2
 |---------------------------------
 
+|----------------------------------
+| 06/28/2023, 09:37:58
+|
+| Losses:
+|--------
+| layer 1 loss: 8.101
+| layer 2 loss: 9.288
+| layer 3 loss: 5.794
+| layer 4 loss: 5.714
+| layer 5 loss: 5.691
+| layer 6 loss: 6.096
+| layer 7 loss: 6.039
+| layer 8 loss: 4.438
+| layer 9 loss: 4.478
+| layer 10 loss: 3.083
+| layer 11 loss: 0.604
+|
+| Args:
+|-------
+| lr: 0.01
+| train epochs: 500
+| hidden layers: 5
+| noise: 0.01
+| train size: 0.7
+| spec scale: 1000000000000
+| train criterion: L1Loss()
+| test criterion: L1Loss()
+| correlation: 0.2
+|---------------------------------
+
