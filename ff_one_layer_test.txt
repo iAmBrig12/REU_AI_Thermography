@@ -62,3 +62,35 @@
 | scaler:           RobustScaler()
 ====================================
 
+===================================
+|    07/06/2023, 15:49:31
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     9.339
+| layer 2 loss:     17.096
+| layer 3 loss:     6.160
+| layer 4 loss:     8.450
+| layer 5 loss:     9.405
+| layer 6 loss:     9.062
+| layer 7 loss:     10.522
+| layer 8 loss:     9.877
+| layer 9 loss:     13.558
+| layer 10 loss:    6.384
+| layer 11 loss:    8.967
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     500
+| hidden layers:    15
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.0
+| input features:   20
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+====================================
+
