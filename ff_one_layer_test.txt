@@ -158,3 +158,296 @@
 | scaler:           RobustScaler()
 ====================================
 
+===================================
+|    07/10/2023, 09:55:04
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     0.853
+| layer 2 loss:     9.080
+| layer 3 loss:     5.469
+| layer 4 loss:     5.007
+| layer 5 loss:     5.003
+| layer 6 loss:     6.597
+| layer 7 loss:     7.010
+| layer 8 loss:     7.527
+| layer 9 loss:     3.368
+| layer 10 loss:    2.245
+| layer 11 loss:    1.394
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     500
+| hidden layers:    5
+| noise:            0.0
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.5
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+====================================
+
+===================================
+|    07/10/2023, 10:02:05
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     4.576
+| layer 2 loss:     10.304
+| layer 3 loss:     7.096
+| layer 4 loss:     6.623
+| layer 5 loss:     6.893
+| layer 6 loss:     6.980
+| layer 7 loss:     9.181
+| layer 8 loss:     10.548
+| layer 9 loss:     9.879
+| layer 10 loss:    8.105
+| layer 11 loss:    9.449
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     100
+| hidden layers:    10
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.2
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+====================================
+
+===================================
+|    07/10/2023, 10:06:30
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     4.998
+| layer 2 loss:     11.251
+| layer 3 loss:     7.866
+| layer 4 loss:     7.084
+| layer 5 loss:     11.411
+| layer 6 loss:     7.398
+| layer 7 loss:     8.345
+| layer 8 loss:     8.806
+| layer 9 loss:     114.986
+| layer 10 loss:    1518.416
+| layer 11 loss:    17.164
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     200
+| hidden layers:    20
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.2
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+====================================
+
+===================================
+|    07/10/2023, 10:17:17
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     5.679
+| layer 2 loss:     9.999
+| layer 3 loss:     5.730
+| layer 4 loss:     7.730
+| layer 5 loss:     6.760
+| layer 6 loss:     6.841
+| layer 7 loss:     7.056
+| layer 8 loss:     7.172
+| layer 9 loss:     6.330
+| layer 10 loss:    7.149
+| layer 11 loss:    6.257
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     200
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+====================================
+
+===================================
+|    07/10/2023, 10:48:08
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     10.812
+| layer 2 loss:     10.466
+| layer 3 loss:     7.238
+| layer 4 loss:     6.911
+| layer 5 loss:     7.225
+| layer 6 loss:     7.698
+| layer 7 loss:     7.734
+| layer 8 loss:     7.054
+| layer 9 loss:     4.891
+| layer 10 loss:    4.676
+| layer 11 loss:    5.067
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     500
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0.2
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.75
+====================================
+
+===================================
+|    07/10/2023, 14:23:02
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     9.268
+| layer 2 loss:     10.853
+| layer 3 loss:     6.433
+| layer 4 loss:     8.118
+| layer 5 loss:     7.227
+| layer 6 loss:     8.478
+| layer 7 loss:     8.693
+| layer 8 loss:     8.138
+| layer 9 loss:     7.826
+| layer 10 loss:    6.081
+| layer 11 loss:    3.961
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     500
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.5
+====================================
+
+===================================
+|    07/10/2023, 14:39:25
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     5.711
+| layer 2 loss:     10.561
+| layer 3 loss:     7.930
+| layer 4 loss:     6.736
+| layer 5 loss:     6.045
+| layer 6 loss:     7.824
+| layer 7 loss:     7.839
+| layer 8 loss:     6.157
+| layer 9 loss:     5.170
+| layer 10 loss:    6.627
+| layer 11 loss:    6.249
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     750
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.5
+====================================
+
+===================================
+|    07/10/2023, 15:04:24
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     6.066
+| layer 2 loss:     10.554
+| layer 3 loss:     6.223
+| layer 4 loss:     6.699
+| layer 5 loss:     6.159
+| layer 6 loss:     7.043
+| layer 7 loss:     7.198
+| layer 8 loss:     5.053
+| layer 9 loss:     4.965
+| layer 10 loss:    3.725
+| layer 11 loss:    3.223
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     1000
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.5
+====================================
+
+===================================
+|    07/10/2023, 15:39:46
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     5.542
+| layer 2 loss:     10.563
+| layer 3 loss:     5.826
+| layer 4 loss:     5.643
+| layer 5 loss:     6.249
+| layer 6 loss:     5.858
+| layer 7 loss:     6.595
+| layer 8 loss:     5.446
+| layer 9 loss:     5.444
+| layer 10 loss:    4.772
+| layer 11 loss:    3.274
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     1200
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.5
+====================================
+
