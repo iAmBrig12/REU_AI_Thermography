@@ -451,3 +451,36 @@
 | dropout:          0.5
 ====================================
 
+===================================
+|    07/11/2023, 09:30:28
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     6.035
+| layer 2 loss:     10.547
+| layer 3 loss:     6.905
+| layer 4 loss:     4.843
+| layer 5 loss:     6.004
+| layer 6 loss:     7.135
+| layer 7 loss:     6.663
+| layer 8 loss:     5.004
+| layer 9 loss:     4.627
+| layer 10 loss:    3.521
+| layer 11 loss:    2.903
+|
+|         Args
+|----------------------------------
+| lr:               0.01
+| train epochs:     1500
+| hidden layers:    5
+| noise:            0.01
+| train size:       0.7
+| spec scale:       1000000000000
+| correlation:      0
+| input features:   40
+| train criterion:  L1Loss()
+| test criterion:   L1Loss()
+| scaler:           RobustScaler()
+| dropout:          0.5
+====================================
+
