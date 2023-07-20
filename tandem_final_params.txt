@@ -433,3 +433,267 @@
 | percent inverse:  0.5
 ====================================
 
+===================================
+|    07/20/2023, 13:15:29
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     4.208
+| layer 2 loss:     9.765
+| layer 3 loss:     5.873
+| layer 4 loss:     5.262
+| layer 5 loss:     5.346
+| layer 6 loss:     6.009
+| layer 7 loss:     6.295
+| layer 8 loss:     4.541
+| layer 9 loss:     4.094
+| layer 10 loss:    4.042
+| layer 11 loss:    0.985
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 13:26:06
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     3.801
+| layer 2 loss:     9.444
+| layer 3 loss:     5.526
+| layer 4 loss:     4.950
+| layer 5 loss:     4.924
+| layer 6 loss:     5.868
+| layer 7 loss:     6.090
+| layer 8 loss:     4.461
+| layer 9 loss:     4.231
+| layer 10 loss:    4.110
+| layer 11 loss:    0.896
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 13:32:26
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     4.079
+| layer 2 loss:     9.200
+| layer 3 loss:     5.537
+| layer 4 loss:     4.768
+| layer 5 loss:     5.149
+| layer 6 loss:     6.129
+| layer 7 loss:     6.398
+| layer 8 loss:     4.426
+| layer 9 loss:     4.117
+| layer 10 loss:    4.293
+| layer 11 loss:    0.931
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 13:39:52
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     4.035
+| layer 2 loss:     9.395
+| layer 3 loss:     5.508
+| layer 4 loss:     4.806
+| layer 5 loss:     5.024
+| layer 6 loss:     6.168
+| layer 7 loss:     6.458
+| layer 8 loss:     4.359
+| layer 9 loss:     3.959
+| layer 10 loss:    4.177
+| layer 11 loss:    1.020
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 13:46:40
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     3.502
+| layer 2 loss:     9.342
+| layer 3 loss:     5.777
+| layer 4 loss:     4.896
+| layer 5 loss:     4.953
+| layer 6 loss:     6.215
+| layer 7 loss:     6.430
+| layer 8 loss:     4.315
+| layer 9 loss:     4.030
+| layer 10 loss:    4.576
+| layer 11 loss:    1.209
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 13:54:06
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     3.973
+| layer 2 loss:     9.124
+| layer 3 loss:     5.755
+| layer 4 loss:     5.052
+| layer 5 loss:     5.195
+| layer 6 loss:     5.982
+| layer 7 loss:     6.203
+| layer 8 loss:     4.448
+| layer 9 loss:     4.149
+| layer 10 loss:    4.358
+| layer 11 loss:    0.991
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 14:06:11
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     3.790
+| layer 2 loss:     9.978
+| layer 3 loss:     5.661
+| layer 4 loss:     4.815
+| layer 5 loss:     5.132
+| layer 6 loss:     6.450
+| layer 7 loss:     6.407
+| layer 8 loss:     4.503
+| layer 9 loss:     4.024
+| layer 10 loss:    4.345
+| layer 11 loss:    1.016
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
+===================================
+|    07/20/2023, 14:12:02
+|
+|         Losses
+|----------------------------------
+| layer 1 loss:     3.613
+| layer 2 loss:     9.362
+| layer 3 loss:     5.523
+| layer 4 loss:     4.653
+| layer 5 loss:     5.359
+| layer 6 loss:     6.200
+| layer 7 loss:     6.202
+| layer 8 loss:     4.289
+| layer 9 loss:     3.839
+| layer 10 loss:    4.456
+| layer 11 loss:    0.993
+|
+|         Args
+|----------------------------------
+| noise:            0.01
+| percent training data:0.7
+| spec scale:       1000000000000
+| forward learning rate:0.01
+| tandem learning rate:0.01
+| forward training epochs:1000
+| tandem training epochs:5000
+| forward training criterion:L1Loss()
+| tandem training criterion:L1Loss()
+| testing criterion:L1Loss()
+| optimizer:        <class 'torch.optim.rprop.Rprop'>
+| percent inverse:  0.5
+====================================
+
