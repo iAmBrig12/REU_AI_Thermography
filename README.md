@@ -14,10 +14,11 @@
 ### individual_layer.ipynb
 #### description: Feature-selected network that predicts each temperature layer individually
 
+
 ### Old Code Folder: 
 ### description: Original attempt at Thermography project by other people
 
-### Underdeveloped Attempts: 
+### Underdeveloped Attempts Folder: 
 ### description: This project attempted different network topologies and approaches. These attempts were not as fully developed as the final models. 
 
 #### data Folder: 
