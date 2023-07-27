@@ -19,9 +19,9 @@
 ### description: Original attempt at Thermography project by other people
 
 ### Underdeveloped Attempts Folder: 
-### description: This project attempted different network topologies and approaches. These attempts were not as fully developed as the final models. 
+### description: This project has many attempts at different network topologies and approaches. These attempts were not nearly as developed as the final models. 
 
 #### data Folder: 
 ### description: This contains all of the data we had been given; however, the latest data we used was the data_3nm.xlsx file that is not in this folder.
- 
+
  
