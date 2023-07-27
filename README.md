@@ -1,7 +1,7 @@
 # REU_AI_Thermography
 
 ### Final Models in main folder: 
-### - Use data.3nm.xlsx file
+### - Use data_3nm.xlsx file
 
 ### feedforward.ipynb
 #### description: Simple feedforward neural network with 2 hidden layers. Most accurate model.
