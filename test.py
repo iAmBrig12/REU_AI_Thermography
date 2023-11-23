@@ -97,16 +97,16 @@ plt.savefig(f'{folder_name}/layer_loss.png')
 # Prediction visualization
 def plot_comparison(pred, actual, sample):
     plt.figure(figsize=(12, 6))
-    title = f"Temperature Predictions for Sample {sample}"
+    title = f"Temperature Predictions for Sample {sample} for {data_fp}"
     plt.title(title, fontsize=20)
-    plt.xlabel("Silica Layer", fontsize=18)
+    plt.xlabel("Layer", fontsize=18)
     plt.ylabel("Temperature (K)", fontsize=18)
     plt.plot([i+1 for i in range(len(y.columns))], actual, color='darkgray', marker='s', label='actual')
     plt.plot([i+1 for i in range(len(y.columns))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
     plt.xticks(range(1,len(y.columns)+1), fontsize=16)
     plt.yticks(fontsize=16)     
     plt.legend()
-    plt.savefig(f'{folder_name}/{title}')
+    plt.savefig(f'{folder_name}/{title}.png')
     
 
 # pick 5 random indices from the dataset and plot the comparison between predicted and actual values

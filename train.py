@@ -15,7 +15,6 @@ args = {'lr':0.01,
         'scaler':RobustScaler()
         }
 
-
 data_fp = sys.argv[1]
 
 df = pd.read_excel(data_fp)
@@ -26,8 +25,11 @@ y = df.filter(regex='layer')
 # spectrum data
 X = df.iloc[:,len(y.columns):]
 
+scaler = args['scaler']
+X_scaled = scaler.fit_transform(X)
+
 # convert data to tensors
-X_train_tensor = torch.tensor(X.values, dtype=torch.float32)
+X_train_tensor = torch.tensor(X_scaled, dtype=torch.float32)
 y_train_tensor = torch.tensor(y.values, dtype=torch.float32)
     
 # define loss function
