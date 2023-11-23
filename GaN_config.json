@@ -1,0 +1,10 @@
+{
+    "model_params": {
+        "hidden layers": [30, 15]
+    },
+    "training_params": {
+      "learning_rate": 0.01,
+      "num_epochs": 5000
+    },
+    "save_path": "/path/to/save/model.pth"
+  }

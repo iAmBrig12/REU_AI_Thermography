@@ -1,16 +1,22 @@
 import torch.nn as nn
-import torch.nn.functional as F
 
 # define neural network
 class Net(nn.Module):
-    def __init__(self, input_size, output_size):
+    def __init__(self, input_size, output_size, hidden_sizes):
         super(Net, self).__init__()
-        self.lin_input = nn.Linear(input_size, 30)
-        self.hidden1 = nn.Linear(30, 15)
-        self.lin_output = nn.Linear(15, output_size)
+        
+        layers = []
+
+        layers.append(nn.Linear(input_size, hidden_sizes[0]))
+        layers.append(nn.ReLU())
+        
+        for i in range(1, len(hidden_sizes)):
+            layers.append(nn.Linear(hidden_sizes[i-1], hidden_sizes[i]))
+            layers.append(nn.ReLU())
+
+        layers.append(nn.Linear(hidden_sizes[-1], output_size))
+
+        self.model = nn.Sequential(*layers)
 
     def forward(self, x):
-        x = F.relu(self.lin_input(x))
-        x = F.relu(self.hidden1(x))
-        x = self.lin_output(x)
-        return x
+        return self.model(x)

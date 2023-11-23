@@ -10,9 +10,6 @@ from thermography_model import Net
 # Parameters for Neural Network
 args = {'lr':0.01,
         'train epochs':5000,
-        'train size':0.8,
-        'criterion':nn.L1Loss(),
-        'scaler':RobustScaler()
         }
 
 data_fp = sys.argv[1]
@@ -25,7 +22,7 @@ y = df.filter(regex='layer')
 # spectrum data
 X = df.iloc[:,len(y.columns):]
 
-scaler = args['scaler']
+scaler = RobustScaler()
 X_scaled = scaler.fit_transform(X)
 
 # convert data to tensors
@@ -33,10 +30,10 @@ X_train_tensor = torch.tensor(X_scaled, dtype=torch.float32)
 y_train_tensor = torch.tensor(y.values, dtype=torch.float32)
     
 # define loss function
-criterion = args['criterion']
+criterion = nn.L1Loss()
 
 # instantiate model
-model = Net(X_train_tensor.size()[1], y_train_tensor.size()[1])
+model = Net(X_train_tensor.size()[1], y_train_tensor.size()[1], [30, 15])
 
 # define optimizer
 optimizer = torch.optim.Rprop(model.parameters(), lr=args['lr'])
