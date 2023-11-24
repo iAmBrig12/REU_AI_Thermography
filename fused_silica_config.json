@@ -7,8 +7,8 @@
       "num_epochs": 5000
     },
     "file_paths": {
-        "model": "GaN_model.pth",
-        "train_data": "GaN_train.xlsx",
-        "results": "GaN results"
+        "model": "fused_silica_model.pth",
+        "train_data": "fused_silica_train.xlsx",
+        "results": "Fused Silica results"
     }
 }

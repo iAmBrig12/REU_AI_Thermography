@@ -1,20 +1,25 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
 import pandas as pd
 import sys
 from sklearn.preprocessing import RobustScaler
 from thermography_model import Net
+import json
 
-# Parameters for Neural Network
-args = {'lr':0.01,
-        'train epochs':5000,
-        }
+# load network configuration from json
+config_path = sys.argv[1]
+with open(config_path, 'r') as config_file:
+    config = json.load(config_file)
 
-data_fp = sys.argv[1]
+hidden_sizes = config['model_params']['hidden layers']
+learning_rate = config['training_params']['learning_rate']
+num_epochs = config['training_params']['num_epochs']
+model_fp = config['file_paths']['model']
+train_data_fp = config['file_paths']['train_data']
 
-df = pd.read_excel(data_fp)
+# load training data
+df = pd.read_excel(train_data_fp)
 
 # layer data
 y = df.filter(regex='layer')
@@ -33,10 +38,10 @@ y_train_tensor = torch.tensor(y.values, dtype=torch.float32)
 criterion = nn.L1Loss()
 
 # instantiate model
-model = Net(X_train_tensor.size()[1], y_train_tensor.size()[1], [30, 15])
+model = Net(X_train_tensor.size()[1], y_train_tensor.size()[1], hidden_sizes)
 
 # define optimizer
-optimizer = torch.optim.Rprop(model.parameters(), lr=args['lr'])
+optimizer = torch.optim.Rprop(model.parameters(), lr=learning_rate)
 
 # Neural Network Training Loop
 best_loss = np.inf
@@ -45,7 +50,7 @@ train_losses = []
 
 print('epoch'.ljust(6) + '| loss' + '\n------|-------------')
 
-for epoch in range(args['train epochs']):
+for epoch in range(num_epochs):
     # forward pass
     outputs = model(X_train_tensor)
 
@@ -65,11 +70,11 @@ for epoch in range(args['train epochs']):
         best_loss = loss.item()
         best_epoch = epoch+1
 
-    if (epoch+1) % int(args['train epochs']/10) == 0:
+    if (epoch+1) % int(num_epochs/10) == 0:
         print(f'{epoch+1}'.ljust(6) + f'|   {loss:.4f}')
 
 print(f'\nbest training loss: {best_loss:.3f} in epoch {best_epoch}\n')  
 
 # save model
-model_fp = 'trained_model.pth' if len(sys.argv) < 3 else sys.argv[2]
+model_fp = model_fp
 torch.save(model.state_dict(), model_fp)
