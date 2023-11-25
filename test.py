@@ -23,17 +23,30 @@ model_fp = config['file_paths']['model']
 hidden_sizes = config['model_params']['hidden layers']
 results_fp = config['file_paths']['results']
 
-# load testing data
+
+folder_path = sys.argv[2]
+file_list = os.listdir(folder_path)
+
 test_names = []
 test_data = []
-for i in range(2, len(sys.argv)):
-    data_fp = sys.argv[i]
-    df = pd.read_excel(data_fp)
+for filename in file_list:
+    file_path = os.path.join(folder_path, filename)
+
+    test_data.append(pd.read_excel(file_path))
+    test_names.append(filename)
+
+# # load testing data
+# test_names = []
+# test_data = []
+# for i in range(2, len(sys.argv)):
+#     data_fp = sys.argv[i]
+#     df = pd.read_excel(data_fp)
     
-    test_names.append(data_fp)
-    test_data.append(df)
+#     test_names.append(data_fp)
+#     test_data.append(df)
 
 for name_index, df in enumerate(test_data):
+    filename = test_names[name_index]
     
     # layer data
     y = df.filter(regex='layer')
@@ -88,7 +101,7 @@ for name_index, df in enumerate(test_data):
 
 
     # create folder to save visualizations
-    folder_name = f'{data_fp}'[:-5] + '_results'
+    folder_name = f'{filename}'[:-5] + '_results'
 
     # Get the current working directory
     current_directory = os.getcwd()
@@ -105,7 +118,7 @@ for name_index, df in enumerate(test_data):
 
     # plot loss by layer
     plt.figure(figsize=(9,6))
-    title = f'Average Loss Per Layer for {data_fp}'
+    title = f'Average Loss Per Layer for {filename}'
     plt.title(title)
     plt.barh(range(1,len(y.columns)+1), test_losses, color='mediumorchid')
     plt.yticks(range(1,len(y.columns)+1))
@@ -137,7 +150,7 @@ for name_index, df in enumerate(test_data):
 
     indices = []
     for i in range(0,5):
-        n = random.randint(0, len(y))
+        n = random.randint(0, len(y) - 1)
         indices.append(n)
 
 
@@ -145,7 +158,7 @@ for name_index, df in enumerate(test_data):
         a = y.iloc[i,:]
         p = pred_df.iloc[i,:]
 
-        title = f"Temperature Predictions of Random Sample {name_index+1} for {data_fp}"
+        title = f"Temperature Predictions of Random Sample {name_index+1} for {filename}"
         plot_comparison(p, a, title)
 
 
@@ -170,6 +183,6 @@ for name_index, df in enumerate(test_data):
     a = y.iloc[average_sample,:]
     p = pred_df.iloc[average_sample,:]
 
-    title = f"Temperature Predictions of Most Average Sample for {data_fp}"
+    title = f"Temperature Predictions of Most Average Sample for {filename}"
 
     plot_comparison(p, a, title)
