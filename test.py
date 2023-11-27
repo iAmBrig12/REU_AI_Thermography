@@ -35,16 +35,6 @@ for filename in file_list:
     test_data.append(pd.read_excel(file_path))
     test_names.append(filename)
 
-# # load testing data
-# test_names = []
-# test_data = []
-# for i in range(2, len(sys.argv)):
-#     data_fp = sys.argv[i]
-#     df = pd.read_excel(data_fp)
-    
-#     test_names.append(data_fp)
-#     test_data.append(df)
-
 for name_index, df in enumerate(test_data):
     filename = test_names[name_index]
     
