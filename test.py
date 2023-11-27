@@ -8,7 +8,6 @@ import os
 import random
 import numpy as np
 import json
-import seaborn as sns
 
 def divider(text="", char="=", divider_length=80):
     if not (text==""):
@@ -194,7 +193,10 @@ for num, lst in enumerate(all_test_losses):
     bars.append(plt.bar(ind+width*num, lst, width, label=test_names[num]))
 
 plt.xticks(ind+width, range(1, N+1))
+plt.title('Loss per Layer for all Files')
 plt.ylabel('Test MAE Loss')
 plt.xlabel('Layer')
 plt.legend()
-plt.show()
+
+
+plt.savefig(f'{results_fp}/all_files_loss.png')
