@@ -8,6 +8,7 @@ import os
 import random
 import numpy as np
 import json
+import seaborn as sns
 
 def divider(text="", char="=", divider_length=80):
     if not (text==""):
@@ -35,6 +36,8 @@ for filename in file_list:
     test_data.append(pd.read_excel(file_path))
     test_names.append(filename)
 
+all_test_losses = []
+
 for name_index, df in enumerate(test_data):
     filename = test_names[name_index]
     
@@ -51,7 +54,6 @@ for name_index, df in enumerate(test_data):
     # load model
     model = Net(len(X.columns), len(y.columns), hidden_sizes)
     model.load_state_dict(torch.load(model_fp))
-
 
 
     # test model on validation data
@@ -105,7 +107,6 @@ for name_index, df in enumerate(test_data):
         # Create the new folder
         os.makedirs(new_folder_path)
 
-
     # plot loss by layer
     plt.figure(figsize=(9,6))
     title = f'Average Loss Per Layer for {filename}'
@@ -120,6 +121,7 @@ for name_index, df in enumerate(test_data):
         plt.text(loss, i + 1, f'{loss:.3f}', ha='left', va='center')
 
     plt.savefig(f'{new_folder_path}/{title}.png')
+    plt.close()
 
     # Prediction visualization
     def plot_comparison(pred, actual, title):
@@ -133,6 +135,7 @@ for name_index, df in enumerate(test_data):
         plt.yticks(fontsize=16)     
         plt.legend()
         plt.savefig(f'{new_folder_path}/{title}.png')
+        plt.close()
         
 
     # pick 5 random indices from the dataset and plot the comparison between predicted and actual values
@@ -176,3 +179,22 @@ for name_index, df in enumerate(test_data):
     title = f"Temperature Predictions of Most Average Sample for {filename}"
 
     plot_comparison(p, a, title)
+
+    all_test_losses.append(test_losses)
+
+
+N = len(test_data[0].filter(regex='layer').columns)
+ind = np.arange(N)
+width = 0.15
+
+plt.figure(figsize=(12,6))
+
+bars = []
+for num, lst in enumerate(all_test_losses):
+    bars.append(plt.bar(ind+width*num, lst, width, label=test_names[num]))
+
+plt.xticks(ind+width, range(1, N+1))
+plt.ylabel('Test MAE Loss')
+plt.xlabel('Layer')
+plt.legend()
+plt.show()
