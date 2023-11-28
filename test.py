@@ -8,11 +8,12 @@ import os
 import random
 import numpy as np
 import json
+import datetime
 
 def divider(text="", char="=", divider_length=80):
     if not (text==""):
         text = ' ' + text + ' '
-    print(text.center(divider_length, char))
+    return text.center(divider_length, char)
 
 # load json config
 config_path = sys.argv[1]
@@ -36,6 +37,7 @@ for filename in file_list:
     test_names.append(filename)
 
 all_test_losses = []
+out_text = ''
 
 for name_index, df in enumerate(test_data):
     filename = test_names[name_index]
@@ -60,7 +62,7 @@ for name_index, df in enumerate(test_data):
     test_losses = []
     average_overall_loss = 0
 
-    divider(text=f'Test Losses for {test_names[name_index]}')
+    out_text += f'Test file: {test_names[name_index]}'
     with torch.no_grad():
         model.eval()
 
@@ -70,9 +72,9 @@ for name_index, df in enumerate(test_data):
 
         average_overall_loss = loss.item()
         
-        print(f'\nAverage Loss: {loss.item()}\n')
+        out_text += f'\nAverage Loss: {loss.item()}\n'
 
-        print('Layer | Loss' + '\n------|--------')
+        out_text += 'Layer | Loss' + '\n------|--------\n'
 
         # per layer loss based on previous predictions
         pred_layers = []
@@ -88,8 +90,9 @@ for name_index, df in enumerate(test_data):
         for i in range(y_test.size(1)):
             loss = test_criterion(pred_layers[i], actual_layers[i])
             test_losses.append(loss.item())
-            print(f'{i}'.ljust(6) + f'| {loss.item():.4f}')
+            out_text += f'{i}'.ljust(6) + f'| {loss.item():.4f}\n'
 
+    out_text += '\n'
 
     # create folder to save visualizations
     folder_name = f'{filename}'[:-5] + '_results'
@@ -200,3 +203,17 @@ plt.legend()
 
 
 plt.savefig(f'{results_fp}/all_files_loss.png')
+
+print(out_text)
+
+with open(f'{results_fp}/test_log.txt', 'a') as f:
+    ct = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    f.write(ct.center(80, '=') + '\n')
+    
+    f.write(out_text +'\n')
+    
+    f.write(
+        f"""Configuration:
+    Learning Rate; {config['training_params']['learning_rate']}
+    Epochs:        {config['training_params']['num_epochs']}
+    Hidden Layers: {hidden_sizes}\n\n""")
