@@ -5,15 +5,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 import os
-import random
 import numpy as np
 import json
 import datetime
 
+# creates a divider string for output
 def divider(text="", char="=", divider_length=80):
     if not (text==""):
         text = ' ' + text + ' '
     return text.center(divider_length, char)
+
 
 # load json config
 config_path = sys.argv[1]
@@ -25,22 +26,22 @@ hidden_sizes = config['model_params']['hidden layers']
 results_fp = config['file_paths']['results']
 
 
+# get files for testing
 folder_path = sys.argv[2]
 file_list = os.listdir(folder_path)
 
-test_names = []
 test_data = []
 for filename in file_list:
     file_path = os.path.join(folder_path, filename)
 
-    test_data.append(pd.read_excel(file_path))
-    test_names.append(filename)
+    test_data.append((filename, pd.read_excel(file_path)))
+
 
 all_test_losses = []
 out_text = ''
-
-for name_index, df in enumerate(test_data):
-    filename = test_names[name_index]
+for entry in test_data:
+    filename = entry[0]
+    df = entry[1]
     
     # layer data
     y = df.filter(regex='layer')
@@ -56,13 +57,12 @@ for name_index, df in enumerate(test_data):
     model = Net(len(X.columns), len(y.columns), hidden_sizes)
     model.load_state_dict(torch.load(model_fp))
 
-
     # test model on validation data
     test_criterion = nn.L1Loss()
     test_losses = []
     average_overall_loss = 0
 
-    out_text += f'Test file: {test_names[name_index]}'
+    out_text += f'Test file: {filename}'
     with torch.no_grad():
         model.eval()
 
@@ -73,7 +73,6 @@ for name_index, df in enumerate(test_data):
         average_overall_loss = loss.item()
         
         out_text += f'\nAverage Loss: {loss.item()}\n'
-
         out_text += 'Layer | Loss' + '\n------|--------\n'
 
         # per layer loss based on previous predictions
@@ -97,19 +96,15 @@ for name_index, df in enumerate(test_data):
     # create folder to save visualizations
     folder_name = f'{filename}'[:-5] + '_results'
 
-    # Get the current working directory
     current_directory = os.getcwd()
 
-    # Create the full path for the new folder
     new_folder_path = os.path.join(current_directory, results_fp)
     new_folder_path = os.path.join(new_folder_path, folder_name)
 
-    # Check if the folder already exists
     if not os.path.exists(new_folder_path):
-        # Create the new folder
         os.makedirs(new_folder_path)
 
-    # plot loss by layer
+    # Loss per layer visualization
     plt.figure(figsize=(9,6))
     title = f'Average Loss Per Layer for {filename}'
     plt.title(title)
@@ -125,7 +120,8 @@ for name_index, df in enumerate(test_data):
     plt.savefig(f'{new_folder_path}/{title}.png')
     plt.close()
 
-    # Prediction visualization
+
+    # prediction visualization
     def plot_comparison(pred, actual, title):
         plt.figure(figsize=(12, 6))
         plt.title(title, fontsize=20)
@@ -138,26 +134,10 @@ for name_index, df in enumerate(test_data):
         plt.legend()
         plt.savefig(f'{new_folder_path}/{title}.png')
         plt.close()
-        
 
-    # pick 5 random indices from the dataset and plot the comparison between predicted and actual values
+
+    # average sample visualization
     pred_df = pd.DataFrame(pred.numpy())
-
-    indices = []
-    for i in range(0,5):
-        n = random.randint(0, len(y) - 1)
-        indices.append(n)
-
-
-    for name_index, i in enumerate(indices):
-        a = y.iloc[i,:]
-        p = pred_df.iloc[i,:]
-
-        title = f"Temperature Predictions of Random Sample {name_index+1} for {filename}"
-        plot_comparison(p, a, title)
-
-
-    # plot the most average sample
     loss_dif = np.inf
     average_sample = 0
     closest_loss = 0
@@ -185,7 +165,8 @@ for name_index, df in enumerate(test_data):
     all_test_losses.append(test_losses)
 
 
-N = len(test_data[0].filter(regex='layer').columns)
+# compare losses across files
+N = len(test_data[0][1].filter(regex='layer').columns)
 ind = np.arange(N)
 width = 0.15
 
@@ -193,7 +174,7 @@ plt.figure(figsize=(12,6))
 
 bars = []
 for num, lst in enumerate(all_test_losses):
-    bars.append(plt.bar(ind+width*num, lst, width, label=test_names[num]))
+    bars.append(plt.bar(ind+width*num, lst, width, label=test_data[num][0]))
 
 plt.xticks(ind+width, range(1, N+1))
 plt.title('Loss per Layer for all Files')
@@ -201,11 +182,12 @@ plt.ylabel('Test MAE Loss')
 plt.xlabel('Layer')
 plt.legend()
 
-
 plt.savefig(f'{results_fp}/all_files_loss.png')
 
+# print output
 print(out_text)
 
+# write output to text file 
 with open(f'{results_fp}/test_log.txt', 'a') as f:
     ct = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     f.write(ct.center(80, '=') + '\n')
