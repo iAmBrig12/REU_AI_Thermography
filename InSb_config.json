@@ -1,6 +1,8 @@
 {
     "model_params": {
-        "hidden layers": [45, 30, 15]
+        "input_size": 501,
+        "output_size": 20,
+        "hidden_layers": [45, 30, 15]
     },
     "training_params": {
       "learning_rate": 0.01,

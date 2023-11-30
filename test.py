@@ -21,8 +21,13 @@ config_path = sys.argv[1]
 with open(config_path, 'r') as config_file:
     config = json.load(config_file)
 
+# model params
+input_size = config['model_params']['input_size']
+output_size = config['model_params']['output_size']
+hidden_sizes = config['model_params']['hidden_layers']
+
+# file paths
 model_fp = config['file_paths']['model']
-hidden_sizes = config['model_params']['hidden layers']
 results_fp = config['file_paths']['results']
 
 
@@ -37,6 +42,12 @@ for filename in file_list:
     test_data.append((filename, pd.read_excel(file_path)))
 
 
+# load model
+model = Net(input_size, output_size, hidden_sizes)
+model.load_state_dict(torch.load(model_fp))
+
+
+# testing loop
 all_test_losses = []
 out_text = ''
 for entry in test_data:
@@ -53,9 +64,6 @@ for entry in test_data:
     X_test = torch.tensor(X.values, dtype=torch.float32)
     y_test = torch.tensor(y.values, dtype=torch.float32)
 
-    # load model
-    model = Net(len(X.columns), len(y.columns), hidden_sizes)
-    model.load_state_dict(torch.load(model_fp))
 
     # test model on validation data
     test_criterion = nn.L1Loss()

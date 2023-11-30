@@ -12,11 +12,19 @@ config_path = sys.argv[1]
 with open(config_path, 'r') as config_file:
     config = json.load(config_file)
 
-hidden_sizes = config['model_params']['hidden layers']
+# model parameters
+input_size = config['model_params']['input_size']
+output_size = config['model_params']['output_size']
+hidden_sizes = config['model_params']['hidden_layers']
+
+# training parameters
 learning_rate = config['training_params']['learning_rate']
 num_epochs = config['training_params']['num_epochs']
+
+# file paths
 model_fp = config['file_paths']['model']
 train_data_fp = config['file_paths']['train_data']
+
 
 # load training data
 df = pd.read_excel(train_data_fp)
@@ -30,18 +38,19 @@ X = df.iloc[:,len(y.columns):]
 scaler = RobustScaler()
 X_scaled = scaler.fit_transform(X)
 
-# convert data to tensors
 X_train_tensor = torch.tensor(X_scaled, dtype=torch.float32)
 y_train_tensor = torch.tensor(y.values, dtype=torch.float32)
-    
+
+
+# instantiate model
+model = Net(input_size, output_size, hidden_sizes)
+
 # define loss function
 criterion = nn.L1Loss()
 
-# instantiate model
-model = Net(X_train_tensor.size()[1], y_train_tensor.size()[1], hidden_sizes)
-
 # define optimizer
 optimizer = torch.optim.Rprop(model.parameters(), lr=learning_rate)
+
 
 # Neural Network Training Loop
 best_loss = np.inf
@@ -74,6 +83,7 @@ for epoch in range(num_epochs):
         print(f'{epoch+1}'.ljust(6) + f'|   {loss:.4f}')
 
 print(f'\nbest training loss: {best_loss:.3f} in epoch {best_epoch}\n')  
+
 
 # save model
 model_fp = model_fp
