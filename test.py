@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from thermography_model import Net
+from sklearn.preprocessing import RobustScaler
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
@@ -60,8 +61,11 @@ for entry in test_data:
     # spectrum data
     X = df.iloc[:,len(y.columns):]
 
+    scaler = RobustScaler()
+    X_scaled = scaler.fit_transform(X)
+
     # convert data to tensors
-    X_test = torch.tensor(X.values, dtype=torch.float32)
+    X_test = torch.tensor(X_scaled, dtype=torch.float32)
     y_test = torch.tensor(y.values, dtype=torch.float32)
 
 
@@ -97,7 +101,7 @@ for entry in test_data:
         for i in range(y_test.size(1)):
             loss = test_criterion(pred_layers[i], actual_layers[i])
             test_losses.append(loss.item())
-            out_text += f'{i}'.ljust(6) + f'| {loss.item():.4f}\n'
+            out_text += f'{i+1}'.ljust(6) + f'| {loss.item():.4f}\n'
 
     out_text += '\n'
 
