@@ -1,7 +1,7 @@
 {
     "model_params": {
-        "input_size": 701,
-        "output_size": 20,
+        "input_size": 66,
+        "output_size": 11,
         "hidden_layers": [30, 15]
     },
     "training_params": {

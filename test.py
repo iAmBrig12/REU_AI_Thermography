@@ -151,21 +151,21 @@ for entry in test_data:
     # average sample visualization
     pred_df = pd.DataFrame(pred.numpy())
     loss_dif = np.inf
-    average_sample = 0
+    average_sample = 10
     closest_loss = 0
 
-    for i in range(len(X_test)):
-        x_row = X_test[i]
-        y_row = y_test[i]
+    # for i in range(len(X_test)):
+    #     x_row = X_test[i]
+    #     y_row = y_test[i]
 
-        pred = model(x_row)
-        loss = test_criterion(pred, y_row)
+    #     pred = model(x_row)
+    #     loss = test_criterion(pred, y_row)
 
-        dif = abs(loss.item() - average_overall_loss)
-        if dif < loss_dif:
-            loss_dif = dif
-            average_sample = i
-            closest_loss = loss.item()
+    #     dif = abs(loss.item() - average_overall_loss)
+    #     if dif < loss_dif:
+    #         loss_dif = dif
+    #         average_sample = i
+    #         closest_loss = loss.item()
 
     a = y.iloc[average_sample,:]
     p = pred_df.iloc[average_sample,:]

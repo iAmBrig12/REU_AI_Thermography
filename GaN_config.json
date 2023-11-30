@@ -2,11 +2,11 @@
     "model_params": {
         "input_size": 701,
         "output_size": 20,
-        "hidden_layers": [20]
+        "hidden_layers": [90]
     },
     "training_params": {
       "learning_rate": 0.01,
-      "num_epochs": 2500
+      "num_epochs": 1000
     },
     "file_paths": {
         "model": "GaN_model.pth",
