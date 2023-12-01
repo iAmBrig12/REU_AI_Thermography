@@ -17,6 +17,21 @@ def divider(text="", char="=", divider_length=80):
     return text.center(divider_length, char)
 
 
+# prediction visualization function
+def plot_comparison(pred, actual, title):
+    plt.figure(figsize=(12, 6))
+    plt.title(title, fontsize=20)
+    plt.xlabel("Layer", fontsize=18)
+    plt.ylabel("Temperature (K)", fontsize=18)
+    plt.plot([i+1 for i in range(len(y.columns))], actual, color='darkgray', marker='s', label='actual')
+    plt.plot([i+1 for i in range(len(y.columns))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
+    plt.xticks(range(1,len(y.columns)+1), fontsize=16)
+    plt.yticks(fontsize=16)     
+    plt.legend()
+    plt.savefig(f'{new_folder_path}/{title}.png')
+    plt.close()
+
+
 # load json config
 config_path = sys.argv[1]
 with open(config_path, 'r') as config_file:
@@ -48,9 +63,14 @@ model = Net(input_size, output_size, hidden_sizes)
 model.load_state_dict(torch.load(model_fp))
 
 
-# testing loop
+# variables for test results
 all_test_losses = []
+sample_index = 10
+sample_actual = test_data[0][1].filter(regex='layer').iloc[sample_index,:]
+sample_predictions = []
 out_text = ''
+
+# testing loop
 for entry in test_data:
     filename = entry[0]
     df = entry[1]
@@ -133,47 +153,15 @@ for entry in test_data:
     plt.close()
 
 
-    # prediction visualization
-    def plot_comparison(pred, actual, title):
-        plt.figure(figsize=(12, 6))
-        plt.title(title, fontsize=20)
-        plt.xlabel("Layer", fontsize=18)
-        plt.ylabel("Temperature (K)", fontsize=18)
-        plt.plot([i+1 for i in range(len(y.columns))], actual, color='darkgray', marker='s', label='actual')
-        plt.plot([i+1 for i in range(len(y.columns))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
-        plt.xticks(range(1,len(y.columns)+1), fontsize=16)
-        plt.yticks(fontsize=16)     
-        plt.legend()
-        plt.savefig(f'{new_folder_path}/{title}.png')
-        plt.close()
-
-
-    # average sample visualization
+    # sample visualization
     pred_df = pd.DataFrame(pred.numpy())
-    loss_dif = np.inf
-    average_sample = 10
-    closest_loss = 0
+    sample_pred = pred_df.iloc[sample_index,:]
 
-    # for i in range(len(X_test)):
-    #     x_row = X_test[i]
-    #     y_row = y_test[i]
+    title = f"Temperature Predictions of a Range of Samples for {filename}"
 
-    #     pred = model(x_row)
-    #     loss = test_criterion(pred, y_row)
+    plot_comparison(sample_pred, sample_actual, title)
 
-    #     dif = abs(loss.item() - average_overall_loss)
-    #     if dif < loss_dif:
-    #         loss_dif = dif
-    #         average_sample = i
-    #         closest_loss = loss.item()
-
-    a = y.iloc[average_sample,:]
-    p = pred_df.iloc[average_sample,:]
-
-    title = f"Temperature Predictions of Most Average Sample for {filename}"
-
-    plot_comparison(p, a, title)
-
+    sample_predictions.append(sample_pred)
     all_test_losses.append(test_losses)
 
 
@@ -195,6 +183,24 @@ plt.xlabel('Layer')
 plt.legend()
 
 plt.savefig(f'{results_fp}/all_files_loss.png')
+
+
+# compare predictions for sample
+plt.figure(figsize=(12, 6))
+plt.title("All Temperature Predictions for a Sample", fontsize=20)
+plt.xlabel("Layer", fontsize=18)
+plt.ylabel("Temperature (K)", fontsize=18)
+plt.plot([i+1 for i in range(output_size)], sample_actual, label='actual')
+
+for idx in range(len(test_data)-1):
+    plt.plot([i+1 for i in range(output_size)], sample_predictions[idx], label=test_data[idx][0])
+
+plt.xticks(range(1, output_size+1), fontsize=16)
+plt.yticks(fontsize=16)     
+plt.legend()
+plt.savefig(f'{results_fp}/All Temperature Predictions for a Sample.png')
+plt.close()
+
 
 # print output
 print(out_text)
