@@ -214,6 +214,6 @@ with open(f'{results_fp}/test_log.txt', 'a') as f:
     
     f.write(
         f"""Configuration:
-    Learning Rate; {config['training_params']['learning_rate']}
+    Learning Rate: {config['training_params']['learning_rate']}
     Epochs:        {config['training_params']['num_epochs']}
     Hidden Layers: {hidden_sizes}\n\n""")
