@@ -23,9 +23,9 @@ def plot_comparison(pred, actual, title):
     plt.title(title, fontsize=20)
     plt.xlabel("Layer", fontsize=18)
     plt.ylabel("Temperature (K)", fontsize=18)
-    plt.plot([i+1 for i in range(len(y.columns))], actual, color='darkgray', marker='s', label='actual')
-    plt.plot([i+1 for i in range(len(y.columns))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
-    plt.xticks(range(1,len(y.columns)+1), fontsize=16)
+    plt.plot([i+1 for i in range(len(cols))], actual, color='darkgray', marker='s', label='actual')
+    plt.plot([i+1 for i in range(len(cols))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
+    plt.xticks(range(1,len(cols)+1), fontsize=16)
     plt.yticks(fontsize=16)     
     plt.legend()
     plt.savefig(f'{results_fp}/{title}.png')
@@ -67,6 +67,7 @@ model.load_state_dict(torch.load(model_fp))
 all_test_losses = []
 sample_index = 10
 sample_actual = test_data[0][1].filter(regex='layer').iloc[sample_index,:]
+cols = test_data[0][1].filter(regex='layer').columns
 sample_predictions = []
 out_text = ''
 
@@ -100,10 +101,6 @@ for entry in test_data:
 
         # get predictions
         pred = model(X_test)
-
-        # export pred to excel
-        pred_df = pd.DataFrame(pred.numpy())
-        pred_df.to_excel(f'{results_fp}/pred{filename[4:-5]}.xlsx', index=False)
         
         # calculate loss
         loss = test_criterion(pred, y_test)
@@ -149,6 +146,7 @@ for entry in test_data:
 
 
     # sample visualization
+    pred_df = pd.DataFrame(pred.numpy())
     sample_pred = pred_df.iloc[sample_index,:]
 
     title = f"Temperature Predictions of a Random Sample for {filename}"
@@ -159,8 +157,13 @@ for entry in test_data:
     all_test_losses.append(test_losses)
 
 
+# export losses to excel
+loss_df = pd.DataFrame(all_test_losses, columns=cols)
+loss_df['filename'] = file_list
+loss_df.to_excel(f'{results_fp}/test_losses.xlsx', index=False)
+
 # compare losses across files
-N = len(test_data[0][1].filter(regex='layer').columns)
+N = len(cols)
 ind = np.arange(N)
 width = 0.15
 
