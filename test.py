@@ -159,8 +159,8 @@ for entry in test_data:
 
 # export losses to excel
 loss_df = pd.DataFrame(all_test_losses, columns=cols)
-loss_df['filename'] = file_list
-loss_df.to_excel(f'{results_fp}/test_losses.xlsx', index=False)
+loss_df['test file'] = file_list
+loss_df.to_excel(f'{results_fp}/{results_fp[:-8]} test losses.xlsx', index=False)
 
 # compare losses across files
 N = len(cols)
