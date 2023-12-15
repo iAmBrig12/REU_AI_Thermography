@@ -98,8 +98,14 @@ for entry in test_data:
     with torch.no_grad():
         model.eval()
 
-        # overall predictions and loss
+        # get predictions
         pred = model(X_test)
+
+        # export pred to excel
+        pred_df = pd.DataFrame(pred.numpy())
+        pred_df.to_excel(f'{results_fp}/pred{filename[4:-5]}.xlsx', index=False)
+        
+        # calculate loss
         loss = test_criterion(pred, y_test)
 
         average_overall_loss = loss.item()
@@ -125,17 +131,6 @@ for entry in test_data:
 
     out_text += '\n'
 
-    # create folder to save visualizations
-    folder_name = f'{filename}'[:-5] + '_results'
-
-    current_directory = os.getcwd()
-
-    new_folder_path = os.path.join(current_directory, results_fp)
-    new_folder_path = os.path.join(new_folder_path, folder_name)
-
-    if not os.path.exists(new_folder_path):
-        os.makedirs(new_folder_path)
-
     # Loss per layer visualization
     plt.figure(figsize=(9,6))
     title = f'Average Loss Per Layer for {filename}'
@@ -154,10 +149,9 @@ for entry in test_data:
 
 
     # sample visualization
-    pred_df = pd.DataFrame(pred.numpy())
     sample_pred = pred_df.iloc[sample_index,:]
 
-    title = f"Temperature Predictions of a Range of Samples for {filename}"
+    title = f"Temperature Predictions of a Random Sample for {filename}"
 
     plot_comparison(sample_pred, sample_actual, title)
 
