@@ -28,7 +28,7 @@ def plot_comparison(pred, actual, title):
     plt.xticks(range(1,len(y.columns)+1), fontsize=16)
     plt.yticks(fontsize=16)     
     plt.legend()
-    plt.savefig(f'{new_folder_path}/{title}.png')
+    plt.savefig(f'{results_fp}/{title}.png')
     plt.close()
 
 
@@ -149,7 +149,7 @@ for entry in test_data:
     for i, loss in enumerate(test_losses):
         plt.text(loss, i + 1, f'{loss:.3f}', ha='left', va='center')
 
-    plt.savefig(f'{new_folder_path}/{title}.png')
+    plt.savefig(f'{results_fp}/{title}.png')
     plt.close()
 
 
