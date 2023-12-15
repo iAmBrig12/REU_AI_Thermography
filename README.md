@@ -3,29 +3,48 @@
 ## Abstract
 Predicting temperature distributions beneath the surface of objects is of high interest for a variety of science and engineering applications. Here, we develop a machine learning model built from a technique called depth thermography, based on infrared thermal spectrum data that can remotely determine volumetric temperature distributions. Currently, depth thermography uses physical equations to make its predictions—however, these equations are highly noise-sensitive. To combat this issue, we have developed a shallow neural network that can make accurate decisions with noisy input data. The models in this repository are tuned for three different media: Fused Silica, Gallium Nitride (GaN), and Indium antimonide (InSb)
 
-## Files and Usage
+## Files
 ### Configuration Files: 
-fused_silica.json, GaN_config.json, InSb_config.json
+#### fused_silica.json, GaN_config.json, InSb_config.json
 
-These files contain the neural network model training parameters as well as the necessary file paths for training and testing. Any adjustments made to the training data path and model parameters will be made here.
+- These files contain the neural network model training parameters as well as the necessary file paths for training and testing. 
+- Any adjustments made to the training data path and model parameters will be made here.
 
+### Neural Network:
+#### thermography_model.py
+- This file defines the neural network
+- The structure of the network is dynamic based on the configuration file provided to accomodate different media
 
+### Model Training:
+#### train.py
+- This file will train a model using a config file and training data file
+- Trained model will be saved to a path designated by config file
 
-### tandem_final.ipynb
-#### description: Combines spectrum to temperature network with a temperature to spectrum network
+### Model Testing: 
+#### test.py
+- This file will test a model specified in the config file 
+- It will test all files in a given folder
+- Results are saved in Fused Silica results, GaN results, or InSb results, as specified in config file
+- Testing results:
+    - All Temperature Prediction for a Sample - Visualization of the predictions made for a random sample across all test files
+    - Average Loss Per Layer for <test_file> - Visulization of the MAE loss per material layer for each test file
+    - Temperature Predictions of a Random Sample for <test_file> - Visualization of predictions for a random sample made using each test file
+    - <material> test losses - Excel file with testing results for each file
 
+#### Fused Silica results, GaN results, InSb results
+- Folders that testing results are saved to
+- These folders must be made before testing and are specified in config files
 
-### individual_layer.ipynb
-#### description: Feature-selected network that predicts each temperature layer individually
+#### fused_silica_gauss, GaN_gauss, InSb_gauss
+- These folders contain testing data for each material
+- Testing data has a Gaussian distribution of noise applied to the exact values computed using depth thermography equations
+- Noise distributions are: exact, SNR=55, SNR=50, SNR=45, and SNR=35, where SNR=35 represents the highest amount of noise and SNR=50 being the closest to what is expected from experimental data
 
+### Data Visualization:
+#### data_visualization.ipynb
+- Jupyter Notebook that visualizes the noise added to the data in test files
 
-### Old Code Folder: 
-### description: Original attempt at Thermography project by other people
+## Usage
+python train.py <model_config>
 
-### Underdeveloped Attempts Folder: 
-### description: This project has many attempts at different network topologies and approaches. These attempts were not nearly as developed as the final models. 
-
-#### data Folder: 
-### description: This contains all of the data we had been given; however, the latest data we used was the data_3nm.xlsx file that is not in this folder.
-
- 
+python test.py <model_config> <test_folder> 
