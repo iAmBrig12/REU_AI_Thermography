@@ -7,22 +7,25 @@ Predicting temperature distributions beneath the surface of objects is of high i
 ### Configuration Files: 
 #### fused_silica.json, GaN_config.json, InSb_config.json
 
-- These files contain the neural network model training parameters as well as the necessary file paths for training and testing. 
+- Json configuration files containing the neural network model training parameters as well as the necessary file paths for training and testing. 
 - Any adjustments made to the training data path and model parameters will be made here.
 
 ### Neural Network:
 #### thermography_model.py
-- This file defines the neural network
+- Python script to build neural network
 - The structure of the network is dynamic based on the configuration file provided to accomodate different media
 
 ### Model Training:
 #### train.py
-- This file will train a model using a config file and training data file
+- Python script to train a model using a config file and training data file
 - Trained model will be saved to a path designated by config file
+
+#### fused_silica_train.xlsx, GaN_train.xlsx, InSb_train.xlsx
+- Training files for models
 
 ### Model Testing: 
 #### test.py
-- This file will test a model specified in the config file 
+- Python script to test a model specified in the config file 
 - It will test all files in a given folder
 - Results are saved in Fused Silica results, GaN results, or InSb results, as specified in config file
 - Testing results:
