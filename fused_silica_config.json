@@ -1,4 +1,5 @@
 {
+    "material":"Fused Silica",
     "model_params": {
         "input_size": 66,
         "output_size": 11,

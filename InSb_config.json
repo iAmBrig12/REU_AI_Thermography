@@ -1,4 +1,5 @@
 {
+    "material":"InSb",
     "model_params": {
         "input_size": 501,
         "output_size": 20,
