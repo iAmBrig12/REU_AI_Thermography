@@ -3,7 +3,7 @@
     "model_params": {
         "input_size": 66,
         "output_size": 11,
-        "hidden_layers": [30]
+        "hidden_layers": [45, 30]
     },
     "training_params": {
       "learning_rate": 0.01,
@@ -11,7 +11,7 @@
     },
     "file_paths": {
         "model": "fused_silica_model.pth",
-        "train_data": "fused_silica_train.xlsx",
+        "train_data": "fused_silica_big_train.xlsx",
         "results": "Fused Silica results"
     }
 }

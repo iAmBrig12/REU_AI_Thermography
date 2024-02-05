@@ -11,7 +11,7 @@
     },
     "file_paths": {
         "model": "GaN_model.pth",
-        "train_data": "GaN_train.xlsx",
+        "train_data": "GaN_big_train.xlsx",
         "results": "GaN results"
     }
 }

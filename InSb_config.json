@@ -3,15 +3,15 @@
     "model_params": {
         "input_size": 501,
         "output_size": 20,
-        "hidden_layers": [120]
+        "hidden_layers": [90, 60, 30]
     },
     "training_params": {
       "learning_rate": 0.01,
-      "num_epochs": 1500
+      "num_epochs": 1000
     },
     "file_paths": {
         "model": "InSb_model.pth",
-        "train_data": "InSb_train.xlsx",
+        "train_data": "InSb_big_train.xlsx",
         "results": "InSb results"
     }
 }
