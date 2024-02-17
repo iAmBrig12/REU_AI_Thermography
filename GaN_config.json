@@ -8,10 +8,5 @@
     "training_params": {
       "learning_rate": 0.01,
       "num_epochs": 1000
-    },
-    "file_paths": {
-        "model": "GaN_model.pth",
-        "train_data": "GaN_big_train.xlsx",
-        "results": "GaN results"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "material":"Fused Silica",
+    "material":"fused_silica",
     "model_params": {
         "input_size": 66,
         "output_size": 11,
@@ -8,10 +8,5 @@
     "training_params": {
       "learning_rate": 0.01,
       "num_epochs": 1000
-    },
-    "file_paths": {
-        "model": "fused_silica_model.pth",
-        "train_data": "fused_silica_big_train.xlsx",
-        "results": "Fused Silica results"
     }
 }

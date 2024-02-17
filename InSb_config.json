@@ -8,10 +8,5 @@
     "training_params": {
       "learning_rate": 0.01,
       "num_epochs": 1000
-    },
-    "file_paths": {
-        "model": "InSb_model.pth",
-        "train_data": "InSb_big_train.xlsx",
-        "results": "InSb results"
     }
 }

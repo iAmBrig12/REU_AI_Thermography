@@ -3,10 +3,8 @@ import torch.nn as nn
 from thermography_model import Net
 from sklearn.preprocessing import RobustScaler
 import pandas as pd
-import matplotlib.pyplot as plt
 import sys
 import os
-import numpy as np
 import json
 import datetime
 
@@ -16,59 +14,54 @@ def divider(text="", char="=", divider_length=80):
         text = ' ' + text + ' '
     return text.center(divider_length, char)
 
-
-# prediction visualization function
-def plot_comparison(pred, actual, title):
-    plt.figure(figsize=(12, 6))
-    plt.title(title, fontsize=20)
-    plt.xlabel("Layer", fontsize=18)
-    plt.ylabel("Temperature (K)", fontsize=18)
-    plt.plot([i+1 for i in range(len(cols))], actual, color='darkgray', marker='s', label='actual')
-    plt.plot([i+1 for i in range(len(cols))], pred, color='mediumorchid', marker='o', linestyle=' ', label='predicted')
-    plt.xticks(range(1,len(cols)+1), fontsize=16)
-    plt.yticks(fontsize=16)     
-    plt.legend()
-    plt.savefig(f'{results_fp}/{title}.png')
-    plt.close()
-
+# check input
+if len(sys.argv) < 4:
+    print('Incorrect Format')
+    print('python test.py <config_path> <model_name> <test_file_folder>')
+    quit()
 
 # load json config
 config_path = sys.argv[1]
 with open(config_path, 'r') as config_file:
     config = json.load(config_file)
 
+
 # model params
 input_size = config['model_params']['input_size']
 output_size = config['model_params']['output_size']
 hidden_sizes = config['model_params']['hidden_layers']
 
+
 # file paths
-model_fp = config['file_paths']['model']
-results_fp = config['file_paths']['results']
-
-
-# get files for testing
-folder_path = sys.argv[2]
-file_list = os.listdir(folder_path)
+model_name = sys.argv[2]
+model_path = f'Models/{config["material"]}/{model_name}.pth'
+test_folder_path = sys.argv[3]
+file_list = os.listdir(test_folder_path)
 
 test_data = []
 for filename in file_list:
-    file_path = os.path.join(folder_path, filename)
-
+    file_path = os.path.join(test_folder_path, filename)
     test_data.append((filename, pd.read_excel(file_path)))
 
 
 # load model
 model = Net(input_size, output_size, hidden_sizes)
-model.load_state_dict(torch.load(model_fp))
+model.load_state_dict(torch.load(model_path))
 
+# set up directory for test results
+directory = model_name
+parent_dir = f'Test Results/{config["material"]}'
+save_path = os.path.join(parent_dir, directory)
 
-# variables for test results
+try:
+    os.makedirs(save_path, exist_ok=True)
+    print(f'Directory {directory} created')
+except OSError as error:
+    print(f'Directory {directory} cannot be created')
+
+# variables for testing
 all_test_losses = []
-sample_index = 10
-sample_actual = test_data[0][1].filter(regex='layer').iloc[sample_index,:]
 cols = test_data[0][1].filter(regex='layer').columns
-sample_predictions = []
 out_text = ''
 
 # testing loop
@@ -102,6 +95,10 @@ for entry in test_data:
         # get predictions
         pred = model(X_test)
         
+        # save predictions to folder
+        pred_df = pd.DataFrame(pred.numpy(), columns=cols)
+        pred_df.to_excel(f'Test Results/{config["material"]}/{model_name}/pred{filename[4:]}', index=False)
+        
         # calculate loss
         loss = test_criterion(pred, y_test)
 
@@ -128,84 +125,23 @@ for entry in test_data:
 
     out_text += '\n'
 
-    # Loss per layer visualization
-    plt.figure(figsize=(9,6))
-    title = f'Average Loss Per Layer for {filename}'
-    plt.title(title)
-    plt.barh(range(1,len(y.columns)+1), test_losses, color='mediumorchid')
-    plt.yticks(range(1,len(y.columns)+1))
-    plt.xlabel("Temperature Loss (K)")
-    plt.ylabel("Layer")
-    plt.xlim(0,max(test_losses)+1)
-
-    for i, loss in enumerate(test_losses):
-        plt.text(loss, i + 1, f'{loss:.3f}', ha='left', va='center')
-
-    plt.savefig(f'{results_fp}/{title}.png')
-    plt.close()
-
-
-    # sample visualization
-    pred_df = pd.DataFrame(pred.numpy())
-    sample_pred = pred_df.iloc[sample_index,:]
-
-    title = f"Temperature Predictions of a Random Sample for {filename}"
-
-    plot_comparison(sample_pred, sample_actual, title)
-
-    sample_predictions.append(sample_pred)
     all_test_losses.append(test_losses)
 
 
 # export losses to excel
 loss_df = pd.DataFrame(all_test_losses, columns=cols)
 loss_df['test file'] = file_list
-loss_df.to_excel(f'{results_fp}/{results_fp[:-8]} test losses.xlsx', index=False)
-
-# compare losses across files
-N = len(cols)
-ind = np.arange(N)
-width = 0.15
-
-plt.figure(figsize=(12,6))
-
-bars = []
-for num, lst in enumerate(all_test_losses):
-    bars.append(plt.bar(ind+width*num, lst, width, label=test_data[num][0]))
-
-plt.xticks(ind+width, range(1, N+1))
-plt.title('Loss per Layer for all Files')
-plt.ylabel('Test MAE Loss')
-plt.xlabel('Layer')
-plt.legend()
-
-plt.savefig(f'{results_fp}/all_files_loss.png')
-
-
-# compare predictions for sample
-plt.figure(figsize=(12, 6))
-plt.title("All Temperature Predictions for a Sample", fontsize=20)
-plt.xlabel("Layer", fontsize=18)
-plt.ylabel("Temperature (K)", fontsize=18)
-plt.plot([i+1 for i in range(output_size)], sample_actual, label='actual')
-
-for idx in range(len(test_data)-1):
-    plt.plot([i+1 for i in range(output_size)], sample_predictions[idx], label=test_data[idx][0])
-
-plt.xticks(range(1, output_size+1), fontsize=16)
-plt.yticks(fontsize=16)     
-plt.legend()
-plt.savefig(f'{results_fp}/All Temperature Predictions for a Sample.png')
-plt.close()
+loss_df.to_excel(f'Test Results/{config["material"]}/{model_name}/test losses.xlsx', index=False)
 
 
 # print output
 print(out_text)
 
 # write output to text file 
-with open(f'{results_fp}/test_log.txt', 'a') as f:
+with open(f'Test Results/{config["material"]}/test_log.txt', 'a') as f:
     ct = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     f.write(ct.center(80, '=') + '\n')
+    f.write(f'Model: {model_name}\n\n')
     
     f.write(out_text +'\n')
     

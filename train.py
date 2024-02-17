@@ -7,6 +7,12 @@ from sklearn.preprocessing import RobustScaler
 from thermography_model import Net
 import json
 
+# check input
+if len(sys.argv) < 4:
+    print('Incorrect Input')
+    print('python train.py <config_path> <training_data_path> <model_name>')
+    quit()
+
 # load network configuration from json
 config_path = sys.argv[1]
 with open(config_path, 'r') as config_file:
@@ -22,9 +28,8 @@ learning_rate = config['training_params']['learning_rate']
 num_epochs = config['training_params']['num_epochs']
 
 # file paths
-model_fp = config['file_paths']['model']
-train_data_fp = config['file_paths']['train_data']
-
+train_data_fp = sys.argv[2]
+model_name = sys.argv[3]
 
 # load training data
 df = pd.read_excel(train_data_fp)
@@ -86,5 +91,5 @@ print(f'\nbest training loss: {best_loss:.3f} in epoch {best_epoch}\n')
 
 
 # save model
-model_fp = model_fp
+model_fp = f'Models/{config["material"]}/{model_name}.pth'
 torch.save(model.state_dict(), model_fp)
