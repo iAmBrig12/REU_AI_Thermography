@@ -7,47 +7,43 @@ Predicting temperature distributions beneath the surface of objects is of high i
 ### Configuration Files: 
 #### fused_silica.json, GaN_config.json, InSb_config.json
 
-- Json configuration files containing the neural network model training parameters as well as the necessary file paths for training and testing. 
+- Json configuration files containing the neural network model training.
 - Any adjustments made to the training data path and model parameters will be made here.
 
 ### Neural Network:
 #### thermography_model.py
-- Python script to build neural network
-- The structure of the network is dynamic based on the configuration file provided to accomodate different media
+- Python script to build neural network.
+- The structure of the network is dynamic based on the configuration file provided to accomodate different media.
 
 ### Model Training:
 #### train.py
-- Python script to train a model using a config file and training data file
-- Trained model will be saved to a path designated by config file
-
-#### fused_silica_train.xlsx, GaN_train.xlsx, InSb_train.xlsx
-- Training files for models
+- Python script to train a model using a config file and training data file.
+- Trained model state dictionary will be saved to a path designated by the user in the command line input.
+- All models are saved in the Models folder under the material that it was trained for
 
 ### Model Testing: 
 #### test.py
-- Python script to test a model specified in the config file 
-- It will test all files in a given folder
-- Results are saved in Fused Silica results, GaN results, or InSb results, as specified in config file
+- Python script to test a model specified in the command line
+- It will test all files in a folder given in the command line
+- Results are saved in Test Results under the material specified in config file. Under the material folders are the results for individual models.
 - Testing results:
-    - All Temperature Prediction for a Sample - Visualization of the predictions made for a random sample across all test files
-    - Average Loss Per Layer for <test_file> - Visulization of the MAE loss per material layer for each test file
-    - Temperature Predictions of a Random Sample for <test_file> - Visualization of predictions for a random sample made using each test file
-    - <material> test losses - Excel file with testing results for each file
-
-#### Fused Silica results, GaN results, InSb results
-- Folders that testing results are saved to
-- These folders must be made before testing and are specified in config files
+    - Test Losses - MAE Loss calculations per test file for the given model
+    - Predictions - predictions made using each test file for the given model to be used in further testing or visualization.
 
 #### fused_silica_gauss, GaN_gauss, InSb_gauss
 - These folders contain testing data for each material
 - Testing data has a Gaussian distribution of noise applied to the exact values computed using depth thermography equations
-- Noise distributions are: exact, SNR=55, SNR=50, SNR=45, and SNR=35, where SNR=35 represents the highest amount of noise and SNR=50 being the closest to what is expected from experimental data
 
 ### Data Visualization:
 #### data_visualization.ipynb
 - Jupyter Notebook that visualizes the noise added to the data in test files
 
 ## Usage
-python train.py <model_config>
+python train.py <config_path> <training_data_path> <model_name>
 
-python test.py <model_config> <test_folder> 
+python test.py <config_path> <model_name> <test_file_folder>
+
+### Ex. 
+python train.py GaN_config.json GaN_training_data/exact.xlsx GaN_model_exact
+
+python test.py GaN_config.json GaN_model_exact GaN_gauss
